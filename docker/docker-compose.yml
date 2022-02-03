@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+
+  php:
+    image: php:8.0-cli
+    container_name: api_tester_php
+    volumes:
+      - ../:/app
+      - ./php.ini:/usr/local/etc/php/php.ini
+
+  composer:
+    image: composer:2.2
+    container_name: api_tester_composer
+    command: ["composer", "install"]
+    volumes:
+      - ../:/app
+
