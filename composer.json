@@ -1,0 +1,14 @@
+{
+    "autoload": {
+        "psr-4": {
+            "ApiTester\\": "src/"
+        }
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^5.2"
+    },
+    "require": {
+        "allansun/openapi-parser": "^2.1",
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}

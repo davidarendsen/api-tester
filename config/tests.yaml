@@ -1,0 +1,49 @@
+base_url: https://api.example.com
+environment_variables:
+  apiKey: dErPcAsEaPiKeY
+paths:
+  /accesstokens:
+    get:
+      - description: Successful operation (200)
+        status: 200
+        guzzle_parameters:
+          json:
+            username: david
+            password: test1234
+          headers:
+            Api-Key: "{{apiKey}}"
+        tests:
+          - description: Status code
+            type: assertSame
+            parameters:
+              - type: statusCode
+                options:
+                  foo: bar
+              - type: string
+                value: 200
+          - description: Response according to schema
+            type: assertArrayHasKey
+            multi_parameters:
+              firstName:
+                - type: string
+                  value: "firstName"
+                - type: json
+                  value: "users[0]"
+                - type: string
+                  value: 'This is an error message'
+              lastName:
+                - type: string
+                  value: "lastName"
+                - type: json
+                  value: "users[0]"
+                - type: string
+                  value: 'This is an error message'
+          - description: Test something
+            type: assertSame
+            parameters:
+              - type: string
+                value: "test"
+              - type: array
+                properties:
+                  foo: bar
+                  hello: world
