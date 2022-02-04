@@ -22,6 +22,19 @@ $requests = [
 	],
 ];
 
-$apiTest = new ApiTest($requests);
+$options = [
+//	'allowedRequestsToRun' => [
+//		'GET /users/{{userID}}'
+//	],
+//	'disallowedRequestsToRun' => [
+//		'GET /users/{{userID}}',
+//	],
+];
 
-$apiTest->run();
+try {
+	$apiTest = new ApiTest($requests, $options);
+	$apiTest->run();
+}
+catch(Exception $e) {
+	echo $e->getMessage();
+}
