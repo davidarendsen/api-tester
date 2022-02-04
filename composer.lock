@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee31e8c66528696319272520f406b837",
+    "content-hash": "cebedba62456c721439da338632a6ba3",
     "packages": [
         {
             "name": "allansun/openapi-parser",
