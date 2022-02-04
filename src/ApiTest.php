@@ -1,8 +1,8 @@
 <?php
+
 namespace ApiTester;
 
-class ApiTest
-{
+class ApiTest {
 	/**
 	 * @var $requests
 	 */
@@ -15,18 +15,17 @@ class ApiTest
 	public function run() {
 
 		foreach($this->requests as $key => $cases) {
-		  describe($key, function() use($cases) {
-			  foreach($cases as $case => $tests) {
-				  describe($case, function() use($tests) {
-					  foreach($tests as $test) {
-						  it($test, function() {
-							  expect(true)->toBe(true);
-						  });
-					  }
-				  });
-			  }
-		  });
+			describe($key, function() use ($cases) {
+				foreach($cases as $case => $tests) {
+					describe($case, function() use ($tests) {
+						foreach($tests as $test) {
+							it($test, function() {
+								expect(true)->toBe(true);
+							});
+						}
+					});
+				}
+			});
 		}
-
 	}
 }
