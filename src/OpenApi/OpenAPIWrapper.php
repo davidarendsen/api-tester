@@ -1,17 +1,16 @@
 <?php
+
 namespace ApiTester\OpenApi;
 
 use OpenAPI\Parser;
 
-class OpenAPIWrapper
-{
+class OpenAPIWrapper {
 	/**
-	* @var Parser $openApi
-	*/
+	 * @var Parser $openApi
+	 */
 	protected $openApi;
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->openApi = Parser::parse(__DIR__ . '/../config/openapi.yaml');
 	}
 

@@ -1,7 +1,11 @@
 {
     "name": "arendsen/api-tester",
     "description": "Testing your API's",
-    "keywords": ["api", "testing", "kahlan"],
+    "keywords": [
+        "api",
+        "testing",
+        "kahlan"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -17,7 +21,7 @@
     "require": {
         "allansun/openapi-parser": "^2.1",
         "guzzlehttp/guzzle": "^7.0",
-		"kahlan/kahlan": "^5.2",
+        "kahlan/kahlan": "^5.2",
         "symfony/yaml": "^6.0"
     }
 }
