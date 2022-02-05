@@ -1,6 +1,6 @@
 <?php
 
-namespace Arendsen\ApiTester\Specifications\Source;
+namespace Arendsen\ApiTester\SchemaSource;
 
 use Exception;
 

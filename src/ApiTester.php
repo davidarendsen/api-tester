@@ -2,7 +2,9 @@
 
 namespace Arendsen\ApiTester;
 
-class ApiTest {
+use Arendsen\ApiTester\SchemaSource\SourceInterface;
+
+class ApiTester {
 
 	/**
 	 * @var array $requests
@@ -14,8 +16,8 @@ class ApiTest {
 	 */
 	protected array $options = [];
 
-	public function __construct(array $requests, array $options = []) {
-		$this->requests = $requests;
+	public function __construct(SourceInterface $schemaSource, array $options = []) {
+		$this->requests = $schemaSource->toArray();
 		$this->options = $options;
 	}
 
