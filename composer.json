@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "ApiTester\\": "src/"
+            "Arendsen\\ApiTester\\": "src/"
         }
     },
     "require": {

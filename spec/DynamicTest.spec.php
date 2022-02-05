@@ -1,6 +1,8 @@
 <?php
 
-use ApiTester\ApiTest;
+use Arendsen\ApiTester\ApiTest;
+use Arendsen\ApiTester\Source;
+use Arendsen\ApiTester\Specifications\Source\SourceType;
 
 $requests = [
 	'GET /accesstokens' => [
@@ -23,15 +25,22 @@ $requests = [
 ];
 
 $options = [
-//	'allowedRequestsToRun' => [
-//		'GET /users/{{userID}}'
-//	],
+	'allowedRequestsToRun' => [
+		'GET /accesstokens'
+	],
 //	'disallowedRequestsToRun' => [
 //		'GET /users/{{userID}}',
 //	],
 ];
 
 try {
+	$source = (new Source())->create(SourceType::YAML);
+	$source->parseFile(__DIR__ . '/../config/tests.yaml');
+
+	die(var_dump($source->toArray()));
+
+	//$specification = new Specification($source);
+
 	$apiTest = new ApiTest($requests, $options);
 	$apiTest->run();
 }

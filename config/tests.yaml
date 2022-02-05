@@ -1,12 +1,12 @@
-base_url: https://api.example.com
+base_url: https://reqres.in/api
 environment_variables:
   apiKey: dErPcAsEaPiKeY
 paths:
-  /accesstokens:
+  /posts:
     get:
       - description: Successful operation (200)
         status: 200
-        guzzle_parameters:
+        parameters:
           json:
             username: david
             password: test1234
