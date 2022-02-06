@@ -37,7 +37,7 @@ class Request {
 		return $this->getMethod() . ' ' . $this->getPath();
 	}
 
-	public function getResponses() {
+	public function getExpectedResponses() {
 		$responses = [];
 
 		foreach($this->responses as $response) {

@@ -44,8 +44,7 @@ class ApiTester {
 			$httpClient = $this->httpClient;
 
 			describe($request->getMethodAndPath(), function() use($request, $httpClient) {
-				foreach($request->getResponses() as $expectedResponse) {
-
+				foreach($request->getExpectedResponses() as $expectedResponse) {
 					$httpResponse = $httpClient->request(
         				$request->getMethod(),
         				$request->getPath(),
@@ -53,10 +52,11 @@ class ApiTester {
         			);
 
 					describe($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
-
 						foreach($expectedResponse->getTestCases() as $testCase) {
-							it($testCase->getDescription(), function() use($expectedResponse, $httpResponse) {
-								expect($httpResponse->getStatusCode())->toBe($expectedResponse->getStatusCode());
+							$matcher = new Matcher($testCase, $httpResponse);
+
+							it($testCase->getDescription(), function() use($matcher) {
+								$matcher->match();
 							});
 						}
 					});
