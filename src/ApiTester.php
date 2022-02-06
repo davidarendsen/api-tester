@@ -3,7 +3,7 @@
 namespace Arendsen\ApiTester;
 
 use Arendsen\ApiTester\SchemaSource\SourceInterface;
-use GuzzleHttp\Client as HttpClient;
+use Arendsen\ApiTester\HttpClient;
 
 class ApiTester {
 
@@ -25,13 +25,12 @@ class ApiTester {
 	public function __construct(SourceInterface $schemaSource, array $options = []) {
 		$this->schema = new Schema($schemaSource);
 		$this->options = $options;
-
-		$this->httpClient = new HttpClient(['base_uri' => $this->schema->getBaseUri()]);
 	}
 
 	public function run() {
 		$allowedRequestsToRun = $this->getConfig('allowedRequestsToRun');
 		$disallowedRequestsToRun = $this->getConfig('disallowedRequestsToRun');
+		$httpClient = new HttpClient($this->schema->getBaseUri());
 
 		foreach($this->schema->getRequests() as $request) {
 			if(!empty($allowedRequestsToRun) && !in_array($request->getMethodAndPath(), $allowedRequestsToRun)) {
@@ -41,14 +40,12 @@ class ApiTester {
 				continue;
 			}
 
-			$httpClient = $this->httpClient;
-
 			describe($request->getMethodAndPath(), function() use($request, $httpClient) {
 				foreach($request->getExpectedResponses() as $expectedResponse) {
 					$httpResponse = $httpClient->request(
         				$request->getMethod(),
         				$request->getPath(),
-        				array_merge($expectedResponse->getParameters(), ['http_errors' => false])
+        				$expectedResponse->getParameters()
         			);
 
 					describe($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
