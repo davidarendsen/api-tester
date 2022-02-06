@@ -3,13 +3,14 @@
 namespace Arendsen\ApiTester;
 
 use Arendsen\ApiTester\SchemaSource\SourceInterface;
+use GuzzleHttp\Client as HttpClient;
 
 class ApiTester {
 
 	/**
-	 * @var array $requests
+	 * @var Schema $schema
 	 */
-	protected array $requests;
+	protected Schema $schema;
 
 	/**
 	 * @var array $options
@@ -17,7 +18,7 @@ class ApiTester {
 	protected array $options = [];
 
 	public function __construct(SourceInterface $schemaSource, array $options = []) {
-		$this->requests = $schemaSource->toArray();
+		$this->schema = new Schema($schemaSource);
 		$this->options = $options;
 	}
 
@@ -25,7 +26,7 @@ class ApiTester {
 		$allowedRequestsToRun = $this->getConfig('allowedRequestsToRun');
 		$disallowedRequestsToRun = $this->getConfig('disallowedRequestsToRun');
 
-		foreach($this->requests as $key => $cases) {
+		foreach($this->schema->getRequests() as $key => $cases) {
 			if(!empty($allowedRequestsToRun) && !in_array($key, $allowedRequestsToRun)) {
 				continue;
 			}

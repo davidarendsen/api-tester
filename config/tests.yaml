@@ -1,4 +1,4 @@
-base_url: https://reqres.in/api
+base_uri: https://reqres.in/api
 environment_variables:
   apiKey: dErPcAsEaPiKeY
 paths:
