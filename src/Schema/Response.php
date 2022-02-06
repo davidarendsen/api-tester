@@ -4,7 +4,6 @@ namespace Arendsen\ApiTester\Schema;
 
 class Response {
 
-
 	/**
 	 * @var array $response
 	 */
@@ -14,22 +13,26 @@ class Response {
 		$this->response = $response;
 	}
 
-	public function getDescription() {
+	public function getDescription(): string {
 		return $this->response['description'] ?? '';
 	}
 
-	public function getParameters() {
+	public function getStatusCode(): int {
+		return $this->response['status'] ?? 0;
+	}
+
+	public function getParameters(): array {
 		return $this->response['parameters'] ?? [];
 	}
 
 	public function getTestCases(): array {
-		$requests = [];
+		$testCases = [];
 
-		foreach($this->requests as $method => $request) {
-			$requests[] = new Request($method, $this->path, $request);
+		foreach($this->response['tests'] as $testCase) {
+			$testCases[] = new TestCase($testCase);
 		}
 
-		return $requests;
+		return $testCases;
 	}
 
 }

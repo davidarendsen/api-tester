@@ -13,7 +13,7 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: Status code
+          - description: has status code 200
             type: assertSame
             parameters:
               - type: statusCode
@@ -21,7 +21,7 @@ paths:
                   foo: bar
               - type: string
                 value: 200
-          - description: Response according to schema
+          - description: is according to schema
             type: assertArrayHasKey
             multi_parameters:
               firstName:
@@ -38,7 +38,7 @@ paths:
                   value: "users[0]"
                 - type: string
                   value: 'This is an error message'
-          - description: Test something
+          - description: tests something
             type: assertSame
             parameters:
               - type: string

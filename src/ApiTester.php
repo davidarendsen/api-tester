@@ -20,7 +20,7 @@ class ApiTester {
 	/**
 	 * @var HttpClient $httpClient
 	 */
-	protected $httpClient;
+	protected HttpClient $httpClient;
 
 	public function __construct(SourceInterface $schemaSource, array $options = []) {
 		$this->schema = new Schema($schemaSource);
@@ -41,21 +41,24 @@ class ApiTester {
 				continue;
 			}
 
-			describe($request->getMethodAndPath(), function() use($request) {
-				foreach($request->getResponses() as $response) {
+			$httpClient = $this->httpClient;
 
-// 					$response = $this->httpClient->request(
-//         				$request->getMethod(),
-//         				$request->getPath(),
-//         				array_merge($response->getParameters(), ['http_errors' => false])
-//         			);
+			describe($request->getMethodAndPath(), function() use($request, $httpClient) {
+				foreach($request->getResponses() as $expectedResponse) {
 
-					describe($response->getDescription(), function() use ($response) {
-// 						foreach($tests as $test) {
-// 							it($test, function() {
-// 								expect(true)->toBe(true);
-// 							});
-// 						}
+					$httpResponse = $httpClient->request(
+        				$request->getMethod(),
+        				$request->getPath(),
+        				array_merge($expectedResponse->getParameters(), ['http_errors' => false])
+        			);
+
+					describe($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
+
+						foreach($expectedResponse->getTestCases() as $testCase) {
+							it($testCase->getDescription(), function() use($expectedResponse, $httpResponse) {
+								expect($httpResponse->getStatusCode())->toBe($expectedResponse->getStatusCode());
+							});
+						}
 					});
 				}
 			});
