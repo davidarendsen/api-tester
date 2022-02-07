@@ -2,6 +2,7 @@
 
 namespace Arendsen\ApiTester\Matcher;
 
+use Exception;
 use Kahlan\Expectation;
 use Arendsen\ApiTester\Matcher;
 
@@ -16,13 +17,19 @@ class Builder {
 		$this->expectation = expect($expectedValue);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function addMatcher(string $matcher, mixed $data) {
-		if($matcher == Matcher::TO_BE) {
-			$this->expectation->toBe($data['value'] ?? '');
-		}
-
-		if($matcher == Matcher::TO_BE_A) {
-			$this->expectation->toBeA($data);
+		switch($matcher) {
+			case Matcher::TO_BE:
+				$this->expectation->toBe($data['value'] ?? '');
+				break;
+			case Matcher::TO_BE_A:
+				$this->expectation->toBeA($data);
+				break;
+			default:
+				throw new Exception('Could not find matcher ' . $matcher);
 		}
 	}
 

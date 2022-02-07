@@ -11,6 +11,11 @@ class Matcher {
 	const TO_BE = 'toBe';
 	const TO_BE_A = 'toBeA';
 
+	const MATCHERS = [
+		self::TO_BE,
+		self::TO_BE_A
+	];
+
 	/**
 	 * @var TestCase $testCase
 	 */

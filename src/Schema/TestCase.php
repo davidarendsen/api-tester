@@ -26,12 +26,10 @@ class TestCase {
 	public function getMatchers(): array {
 		$matchers = [];
 
-		if(!empty($this->getMatcher(Matcher::TO_BE))) {
-			$matchers[Matcher::TO_BE] = $this->getMatcher(Matcher::TO_BE);
-		}
-
-		if(!empty($this->getMatcher(Matcher::TO_BE_A))) {
-			$matchers[Matcher::TO_BE_A] = $this->getMatcher(Matcher::TO_BE_A);
+		foreach(Matcher::MATCHERS as $matcherType) {
+			if(!empty($this->getMatcher($matcherType))) {
+				$matchers[$matcherType] = $this->getMatcher($matcherType);
+			}
 		}
 
 		return $matchers;
