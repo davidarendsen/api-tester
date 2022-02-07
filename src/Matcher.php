@@ -5,6 +5,7 @@ namespace Arendsen\ApiTester;
 use Kahlan\Expectation;
 use Arendsen\ApiTester\Schema\TestCase;
 use Arendsen\ApiTester\Matcher\Builder;
+use Arendsen\ApiTester\Matcher\ExpectedValue;
 
 class Matcher {
 
@@ -32,10 +33,10 @@ class Matcher {
 	}
 
 	public function match(): Expectation {
-		$expectedValue = $this->testCase->getExpectedValue();
+		$expectedValue = new ExpectedValue($this->testCase);
 
 		$matcherBuilder = new Builder();
-		$matcherBuilder->setExpectedValue(200);
+		$matcherBuilder->setExpectedValue($expectedValue->getValue());
 
 		foreach($this->testCase->getMatchers() as $matcher => $matcherData) {
 			$matcherBuilder->addMatcher($matcher, $matcherData);

@@ -6,6 +6,7 @@ use Arendsen\ApiTester\SchemaSource\Type;
 use Arendsen\ApiTester\Schema\TestCase;
 use Arendsen\ApiTester\Matcher;
 use Arendsen\ApiTester\Matcher\Builder;
+use Arendsen\ApiTester\Matcher\ExpectedValue;
 
 describe('Matcher', function() {
 
@@ -33,8 +34,10 @@ describe('Matcher', function() {
 		$testCase = new TestCase($source->toArray()[0]);
 
 		it('is an instanceof Kahlan\Expectation', function() use($testCase) {
+			$expectedValue = new ExpectedValue($testCase);
+
 			$matcherBuilder = new Builder();
-			$matcherBuilder->setExpectedValue(200);
+			$matcherBuilder->setExpectedValue($expectedValue->getValue());
 
 			foreach($testCase->getMatchers() as $matcher => $matcherData) {
 				$matcherBuilder->addMatcher($matcher, $matcherData);
