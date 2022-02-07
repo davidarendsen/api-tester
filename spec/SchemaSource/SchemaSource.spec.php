@@ -16,6 +16,11 @@ describe('SchemaSource', function() {
 		it('throws an exception  when file does not exist', function() {
 			itThrowsExceptionWhenFileDoesNotExist(__DIR__ . '/yaml_does_not_exist.yaml');
 		});
+
+		it('uses the yaml parser', function() {
+			$source = SchemaSource::create(Type::YAML);
+			expect($source)->toBeAnInstanceOf('Arendsen\ApiTester\SchemaSource\Yaml');
+		});
 	});
 
 	describe('Json source', function() {
@@ -28,6 +33,11 @@ describe('SchemaSource', function() {
 
 		it('throws an exception  when file does not exist', function() {
 			itThrowsExceptionWhenFileDoesNotExist(__DIR__ . '/json_does_not_exist.json');
+		});
+
+		it('uses the json parser', function() {
+			$source = SchemaSource::create(Type::JSON);
+			expect($source)->toBeAnInstanceOf('Arendsen\ApiTester\SchemaSource\Json');
 		});
 	});
 
