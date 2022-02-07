@@ -1,27 +1,18 @@
 <?php
 
 use Arendsen\ApiTester\HttpClient;
+use Arendsen\ApiTester\SchemaSource;
+use Arendsen\ApiTester\SchemaSource\Type;
 use Arendsen\ApiTester\Schema\TestCase;
 use Arendsen\ApiTester\Matcher;
 
-describe('Matcher', function() {
+fdescribe('Matcher', function() {
 
-	context('match()', function() {
-		$testCase = new TestCase([
-			'description' => 'includes firstName as string',
-			'expect' => [
-				'type' => 'jsonSelector',
-				'selection' => [
-					'users', '0', 'firstName',
-				]
-			],
-			'toBe' => [
-				'type' => 'string',
-				'value' => 'David',
-			],
+	$source = SchemaSource::create(Type::YAML);
+	$source->parseFile(__DIR__ . '/tests.yaml');
 
-			//'toBeA' => 'string',
-		]);
+	context('match()', function() use($source) {
+		$testCase = new TestCase($source->toArray()[0]);
 
 		$httpClient = new HttpClient('https://reqres.in/api/');
 		$httpResponse = $httpClient->request(

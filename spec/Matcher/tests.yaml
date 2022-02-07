@@ -1,0 +1,19 @@
+- description: contains a firstName with value 'David'
+  expect:
+    type: jsonSelector
+    selection:
+      - users
+      - 0
+      - firstName
+  toBe:
+    type: string
+    value: David
+
+- description: contains a firstName with type 'string'
+  expect:
+    type: jsonSelector
+    selection:
+      - users
+      - 0
+      - firstName
+  toBeA: string

@@ -3,6 +3,7 @@
 namespace Arendsen\ApiTester;
 
 use Arendsen\ApiTester\Schema\TestCase;
+use Kahlan\Expectation;
 
 class Matcher {
 
@@ -21,7 +22,7 @@ class Matcher {
 		$this->httpResponse = $httpResponse;
 	}
 
-	public function match() {
+	public function match(): Expectation {
 		return expect($this->httpResponse->getStatusCode())->toBe(200);
 	}
 
