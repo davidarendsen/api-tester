@@ -31,35 +31,41 @@ class ApiTester {
 		$allowedRequestsToRun = $this->getConfig('allowedRequestsToRun');
 		$disallowedRequestsToRun = $this->getConfig('disallowedRequestsToRun');
 		$httpClient = new HttpClient($this->schema->getBaseUri());
+		$schema = $this->schema;
 
-		foreach($this->schema->getRequests() as $request) {
-			if(!empty($allowedRequestsToRun) && !in_array($request->getMethodAndPath(), $allowedRequestsToRun)) {
-				continue;
-			}
-			if(!empty($disallowedRequestsToRun) && in_array($request->getMethodAndPath(), $disallowedRequestsToRun)) {
-				continue;
-			}
+		describe('ApiTester', function() use($allowedRequestsToRun, $disallowedRequestsToRun, $httpClient, $schema) {
 
-			describe($request->getMethodAndPath(), function() use($request, $httpClient) {
-				foreach($request->getExpectedResponses() as $expectedResponse) {
-					$httpResponse = $httpClient->request(
-        				$request->getMethod(),
-        				$request->getPath(),
-        				$expectedResponse->getParameters()
-        			);
-
-					describe($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
-						foreach($expectedResponse->getTestCases() as $testCase) {
-							$matcher = new Matcher($testCase, $httpResponse);
-
-							it($testCase->getDescription(), function() use($matcher) {
-								$matcher->match();
-							});
-						}
-					});
+			foreach($schema->getRequests() as $request) {
+				if(!empty($allowedRequestsToRun) && !in_array($request->getMethodAndPath(), $allowedRequestsToRun)) {
+					continue;
 				}
-			});
-		}
+				if(!empty($disallowedRequestsToRun) && in_array($request->getMethodAndPath(), $disallowedRequestsToRun)) {
+					continue;
+				}
+
+				describe($request->getMethodAndPath(), function() use($request, $httpClient) {
+					foreach($request->getExpectedResponses() as $expectedResponse) {
+						$httpResponse = $httpClient->request(
+	                        $request->getMethod(),
+	                        $request->getPath(),
+	                        $expectedResponse->getParameters()
+	                    );
+
+						describe($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
+							foreach($expectedResponse->getTestCases() as $testCase) {
+								$matcher = new Matcher($testCase, $httpResponse);
+
+								it($testCase->getDescription(), function() use($matcher) {
+									$matcher->match();
+								});
+							}
+						});
+					}
+				});
+			}
+
+		});
+
 	}
 
 	/**
