@@ -36,18 +36,8 @@ describe('Matcher', function() {
 			$matcherBuilder = new Builder();
 			$matcherBuilder->setExpectedValue(200);
 
-			if(!empty($testCase->getMatcher(Matcher::TO_BE))) {
-				$matcherBuilder->addMatcher(
-					Matcher::TO_BE,
-					$testCase->getMatcher(Matcher::TO_BE)
-				);
-			}
-
-			if(!empty($testCase->getMatcher(Matcher::TO_BE_A))) {
-				$matcherBuilder->addMatcher(
-					Matcher::TO_BE_A,
-					$testCase->getMatcher(Matcher::TO_BE_A)
-				);
+			foreach($testCase->getMatchers() as $matcher => $matcherData) {
+				$matcherBuilder->addMatcher($matcher, $matcherData);
 			}
 
 			expect($matcherBuilder->match())->toBeAnInstanceOf('Kahlan\Expectation');

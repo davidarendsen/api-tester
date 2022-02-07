@@ -27,26 +27,16 @@ class Matcher {
 	}
 
 	public function match(): Expectation {
-		$expect = $this->testCase->getExpect();
+		$expectedValue = $this->testCase->getExpectedValue();
 
-		$matchers = new Builder();
-		$matchers->setExpectedValue(200);
+		$matcherBuilder = new Builder();
+		$matcherBuilder->setExpectedValue(200);
 
-		if(!empty($this->testCase->getMatcher(self::TO_BE))) {
-			$matchers->addMatcher(
-				self::TO_BE,
-				$this->testCase->getMatcher(self::TO_BE)
-			);
+		foreach($this->testCase->getMatchers() as $matcher => $matcherData) {
+			$matcherBuilder->addMatcher($matcher, $matcherData);
 		}
 
-		if(!empty($this->testCase->getMatcher(self::TO_BE_A))) {
-			$matchers->addMatcher(
-				self::TO_BE_A,
-				$this->testCase->getMatcher(self::TO_BE_A)
-			);
-		}
-
-		return $matchers->match();
+		return $matcherBuilder->match();
 	}
 
 }
