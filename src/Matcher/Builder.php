@@ -12,17 +12,17 @@ class Builder {
 	 */
 	protected Expectation $expectation;
 
-	public function setExpect(mixed $expectedValue) {
+	public function setExpectedValue(mixed $expectedValue) {
 		$this->expectation = expect($expectedValue);
 	}
 
-	public function addMatcher(string $matcher, $data) {
+	public function addMatcher(string $matcher, mixed $data) {
 		if($matcher == Matcher::TO_BE) {
 			$this->expectation->toBe($data['value'] ?? '');
 		}
 
 		if($matcher == Matcher::TO_BE_A) {
-			$this->expectation->toBeA('integer');
+			$this->expectation->toBeA($data);
 		}
 	}
 

@@ -34,7 +34,7 @@ describe('Matcher', function() {
 
 		it('is an instanceof Kahlan\Expectation', function() use($testCase) {
 			$matcherBuilder = new Builder();
-			$matcherBuilder->setExpect(200);
+			$matcherBuilder->setExpectedValue(200);
 
 			if(!empty($testCase->getMatcher(Matcher::TO_BE))) {
 				$matcherBuilder->addMatcher(

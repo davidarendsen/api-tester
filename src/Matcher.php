@@ -30,7 +30,7 @@ class Matcher {
 		$expect = $this->testCase->getExpect();
 
 		$matchers = new Builder();
-		$matchers->setExpect(200);
+		$matchers->setExpectedValue(200);
 
 		if(!empty($this->testCase->getMatcher(self::TO_BE))) {
 			$matchers->addMatcher(
