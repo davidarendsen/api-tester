@@ -21,12 +21,8 @@ class TestCase {
 		return $this->testCase['expect'] ?? [];
 	}
 
-	public function getToBe(): array {
-		return $this->testCase['toBe'] ?? [];
-	}
-
-	public function getToBeA(): string {
-		return $this->testCase['toBeA'] ?? '';
+	public function getMatcher(string $matcher): array {
+		return $this->testCase[$matcher] ?? [];
 	}
 
 }
