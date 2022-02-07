@@ -21,7 +21,7 @@ class TestCase {
 		return $this->testCase['expect'] ?? [];
 	}
 
-	public function getMatcher(string $matcher): array {
+	public function getMatcher(string $matcher): array|string {
 		return $this->testCase[$matcher] ?? [];
 	}
 

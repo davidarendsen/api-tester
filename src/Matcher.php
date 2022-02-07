@@ -2,10 +2,14 @@
 
 namespace Arendsen\ApiTester;
 
-use Arendsen\ApiTester\Schema\TestCase;
 use Kahlan\Expectation;
+use Arendsen\ApiTester\Schema\TestCase;
+use Arendsen\ApiTester\Matcher\Builder;
 
 class Matcher {
+
+	const TO_BE = 'toBe';
+	const TO_BE_A = 'toBeA';
 
 	/**
 	 * @var TestCase $testCase
@@ -23,7 +27,26 @@ class Matcher {
 	}
 
 	public function match(): Expectation {
-		return expect($this->httpResponse->getStatusCode())->toBe(200);
+		$expect = $this->testCase->getExpect();
+
+		$matchers = new Builder();
+		$matchers->setExpect(200);
+
+		if(!empty($this->testCase->getMatcher(self::TO_BE))) {
+			$matchers->addMatcher(
+				self::TO_BE,
+				$this->testCase->getMatcher(self::TO_BE)
+			);
+		}
+
+		if(!empty($this->testCase->getMatcher(self::TO_BE_A))) {
+			$matchers->addMatcher(
+				self::TO_BE_A,
+				$this->testCase->getMatcher(self::TO_BE_A)
+			);
+		}
+
+		return $matchers->match();
 	}
 
 }

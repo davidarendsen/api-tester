@@ -6,8 +6,9 @@
       - 0
       - firstName
   toBe:
-    type: string
-    value: David
+    type: integer
+    value: 200
+  toBeA: integer
 
 - description: contains a firstName with type 'string'
   expect:

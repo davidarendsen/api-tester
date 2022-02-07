@@ -13,37 +13,14 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: Status code
-            type: assertSame
-            parameters:
-              - type: statusCode
-                options:
-                  foo: bar
-              - type: string
-                value: 200
-          - description: Response according to schema
-            type: assertArrayHasKey
-            multi_parameters:
-              firstName:
-                - type: string
-                  value: "firstName"
-                - type: json
-                  value: "users[0]"
-                - type: string
-                  value: 'This is an error message'
-              lastName:
-                - type: string
-                  value: "lastName"
-                - type: json
-                  value: "users[0]"
-                - type: string
-                  value: 'This is an error message'
-          - description: Test something
-            type: assertSame
-            parameters:
-              - type: string
-                value: "test"
-              - type: array
-                properties:
-                  foo: bar
-                  hello: world
+          - description: contains a firstName with value 'David'
+            expect:
+              type: jsonSelector
+              selection:
+                - users
+                - 0
+                - firstName
+            toBe:
+              type: integer
+              value: 200
+            toBeA: integer

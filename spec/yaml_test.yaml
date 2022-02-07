@@ -13,40 +13,24 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: has status code 200
-            type: assertSame
-            parameters:
-              - type: statusCode
-                options:
-                  foo: bar
-              - type: string
-                value: 200
-          - description: is according to schema
-            type: assertArrayHasKey
-            multi_parameters:
-              firstName:
-                - type: string
-                  value: "firstName"
-                - type: json
-                  value: "users[0]"
-                - type: string
-                  value: 'This is an error message'
-              lastName:
-                - type: string
-                  value: "lastName"
-                - type: json
-                  value: "users[0]"
-                - type: string
-                  value: 'This is an error message'
-          - description: tests something
-            type: assertSame
-            parameters:
-              - type: string
-                value: "test"
-              - type: array
-                properties:
-                  foo: bar
-                  hello: world
+          - description: contains a firstName with value 'David'
+            expect:
+              type: jsonSelector
+              selection:
+                - users
+                - 0
+                - firstName
+            toBe:
+              type: integer
+              value: 200
+          - description: contains a firstName with type integer
+            expect:
+              type: jsonSelector
+              selection:
+                - users
+                - 0
+                - firstName
+            toBeA: integer
       - description: Unauthorized response (401)
         status: 200
         parameters:
@@ -56,14 +40,17 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: has status code 401
-            type: assertSame
-            parameters:
-              - type: statusCode
-                options:
-                  foo: bar
-              - type: string
-                value: 200
+          - description: contains a firstName with value 'David'
+            expect:
+              type: jsonSelector
+              selection:
+                - users
+                - 0
+                - firstName
+            toBe:
+              type: integer
+              value: 200
+            toBeA: integer
 
   users:
     get:
@@ -76,37 +63,14 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: has status code 200
-            type: assertSame
-            parameters:
-              - type: statusCode
-                options:
-                  foo: bar
-              - type: string
-                value: 200
-          - description: is according to schema
-            type: assertArrayHasKey
-            multi_parameters:
-              firstName:
-                - type: string
-                  value: "firstName"
-                - type: json
-                  value: "users[0]"
-                - type: string
-                  value: 'This is an error message'
-              lastName:
-                - type: string
-                  value: "lastName"
-                - type: json
-                  value: "users[0]"
-                - type: string
-                  value: 'This is an error message'
-          - description: has a user object
-            type: assertSame
-            parameters:
-              - type: string
-                value: "test"
-              - type: array
-                properties:
-                  foo: bar
-                  hello: world
+          - description: contains a firstName with value 'David'
+            expect:
+              type: jsonSelector
+              selection:
+                - users
+                - 0
+                - firstName
+            toBe:
+              type: integer
+              value: 200
+            toBeA: integer
