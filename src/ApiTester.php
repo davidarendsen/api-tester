@@ -51,7 +51,7 @@ class ApiTester {
 	                        $expectedResponse->getParameters()
 	                    );
 
-						describe($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
+						context($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
 							foreach($expectedResponse->getTestCases() as $testCase) {
 								$matcher = new Matcher($testCase, $httpResponse);
 

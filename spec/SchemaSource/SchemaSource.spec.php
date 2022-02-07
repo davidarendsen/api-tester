@@ -5,7 +5,7 @@ use Arendsen\ApiTester\SchemaSource\Type;
 
 describe('SchemaSource', function() {
 
-	describe('Yaml source', function() {
+	context('Yaml source', function() {
 		it('parses to an array', function() {
 			$source = SchemaSource::create(Type::YAML);
 			$source->parseFile(__DIR__ . '/yaml_source.yaml');
@@ -23,7 +23,7 @@ describe('SchemaSource', function() {
 		});
 	});
 
-	describe('Json source', function() {
+	context('Json source', function() {
 		it('parses to an array', function() {
 			$source = SchemaSource::create(Type::YAML);
 			$source->parseFile(__DIR__ . '/json_source.json');

@@ -17,8 +17,16 @@ class TestCase {
 		return $this->testCase['description'] ?? '';
 	}
 
-	public function getType(): string {
-		return $this->testCase['type'] ?? '';
+	public function getExpect(): array {
+		return $this->testCase['expect'] ?? [];
+	}
+
+	public function getToBe(): array {
+		return $this->testCase['toBe'] ?? [];
+	}
+
+	public function getToBeA(): string {
+		return $this->testCase['toBeA'] ?? '';
 	}
 
 }

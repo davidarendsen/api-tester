@@ -22,7 +22,7 @@ class Matcher {
 	}
 
 	public function match() {
-		expect($this->httpResponse->getStatusCode())->toBe(200);
+		return expect($this->httpResponse->getStatusCode())->toBe(200);
 	}
 
 }
