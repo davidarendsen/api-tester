@@ -3,7 +3,6 @@
 namespace Arendsen\ApiTester;
 
 use Arendsen\ApiTester\Schema\TestCase;
-use GuzzleHttp\Psr7\Response;
 
 class Matcher {
 
@@ -13,17 +12,17 @@ class Matcher {
 	protected TestCase $testCase;
 
 	/**
-	 * @var Response $httpResponse
+	 * @var HttpResponse $httpResponse
 	 */
-	protected Response $httpResponse;
+	protected HttpResponse $httpResponse;
 
-	public function __construct(TestCase $testCase, Response $httpResponse) {
+	public function __construct(TestCase $testCase, HttpResponse $httpResponse) {
 		$this->testCase = $testCase;
 		$this->httpResponse = $httpResponse;
 	}
 
 	public function match() {
-		expect(200)->toBe(200);
+		expect($this->httpResponse->getStatusCode())->toBe(200);
 	}
 
 }

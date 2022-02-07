@@ -9,12 +9,12 @@ try {
 	$source->parseFile(__DIR__ . '/yaml_test.yaml');
 
 	$apiTester = new ApiTester($source, [
-// 		'allowedRequestsToRun' => [
-// 			'GET /accesstokens'
-// 		],
-// 		'disallowedRequestsToRun' => [
-// 			'GET /users/{{userID}}',
-// 		],
+//		'allowedRequestsToRun' => [
+//			'GET /accesstokens'
+//		],
+//		'disallowedRequestsToRun' => [
+//			'GET /users/{{userID}}',
+//		],
 	]);
 	$apiTester->run();
 }
