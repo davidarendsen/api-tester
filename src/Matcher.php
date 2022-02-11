@@ -2,6 +2,8 @@
 
 namespace Arendsen\ApiTester;
 
+use Arendsen\ApiTester\Matcher\Selector;
+use Exception;
 use Kahlan\Expectation;
 use Arendsen\ApiTester\Schema\TestCase;
 use Arendsen\ApiTester\Matcher\Builder;
@@ -31,11 +33,17 @@ class Matcher {
 		$this->httpResponse = $httpResponse;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function match(): Expectation {
 		$expectedValue = $this->testCase->getExpectedValue();
 
+		$selector = (new Selector())->create($expectedValue);
+		$selection = $selector->getSelection($this->httpResponse);
+
 		$matcherBuilder = new Builder();
-		$matcherBuilder->setActualValue(200);
+		$matcherBuilder->setActualValue($selection);
 
 		foreach($this->testCase->getMatchers() as $matcher => $matcherData) {
 			$matcherBuilder->addMatcher($matcher, $matcherData);
