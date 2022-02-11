@@ -34,7 +34,7 @@ describe('Matcher', function() {
 
 		it('is an instanceof Kahlan\Expectation', function() use ($testCase) {
 			$matcherBuilder = new Builder();
-			$matcherBuilder->setExpectedValue(200);
+			$matcherBuilder->setActualValue(200);
 
 			foreach($testCase->getMatchers() as $matcher => $matcherData) {
 				$matcherBuilder->addMatcher($matcher, $matcherData);

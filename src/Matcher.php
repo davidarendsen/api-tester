@@ -35,7 +35,7 @@ class Matcher {
 		$expectedValue = $this->testCase->getExpectedValue();
 
 		$matcherBuilder = new Builder();
-		$matcherBuilder->setExpectedValue(200);
+		$matcherBuilder->setActualValue(200);
 
 		foreach($this->testCase->getMatchers() as $matcher => $matcherData) {
 			$matcherBuilder->addMatcher($matcher, $matcherData);

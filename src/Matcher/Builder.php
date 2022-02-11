@@ -13,8 +13,8 @@ class Builder {
 	 */
 	protected Expectation $expectation;
 
-	public function setExpectedValue(mixed $expectedValue) {
-		$this->expectation = expect($expectedValue);
+	public function setActualValue(mixed $actualValue) {
+		$this->expectation = expect($actualValue);
 	}
 
 	/**
