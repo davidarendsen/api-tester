@@ -15,7 +15,7 @@ paths:
         tests:
           - description: contains a firstName with value 'David'
             expect:
-              type: jsonSelector
+              selector: json
               selection:
                 - users
                 - 0

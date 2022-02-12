@@ -13,9 +13,17 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
+          - description: contains a status code of 200
+            expect:
+              selector: statusCode
+              selection:
+                - 200
+            toBe:
+              type: integer
+              value: 200
           - description: contains a firstName with value 'David'
             expect:
-              type: jsonSelector
+              selector: json
               selection:
                 - users
                 - 0
@@ -25,7 +33,7 @@ paths:
               value: 200
           - description: contains a firstName with type integer
             expect:
-              type: jsonSelector
+              selector: json
               selection:
                 - users
                 - 0
@@ -42,7 +50,7 @@ paths:
         tests:
           - description: contains a firstName with value 'David'
             expect:
-              type: jsonSelector
+              selector: json
               selection:
                 - users
                 - 0
@@ -65,7 +73,7 @@ paths:
         tests:
           - description: contains a firstName with value 'David'
             expect:
-              type: jsonSelector
+              selector: json
               selection:
                 - users
                 - 0

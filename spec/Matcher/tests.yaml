@@ -1,6 +1,15 @@
+- description: contains a status code of 200
+  expect:
+    selector: statusCode
+    selection:
+      - 200
+  toBe:
+    type: integer
+    value: 200
+
 - description: contains a firstName with value 'David'
   expect:
-    type: jsonSelector
+    selector: json
     selection:
       - users
       - 0
@@ -12,7 +21,7 @@
 
 - description: contains a firstName with type 'string'
   expect:
-    type: jsonSelector
+    selector: json
     selection:
       - users
       - 0
