@@ -40,7 +40,6 @@ describe('SchemaSource', function() {
 			expect($source)->toBeAnInstanceOf('Arendsen\ApiTester\SchemaSource\Json');
 		});
 	});
-
 });
 
 function itParsesTheCorrectResponse($source) {
@@ -53,9 +52,8 @@ function itParsesTheCorrectResponse($source) {
 	]);
 }
 
-
 function itThrowsExceptionWhenFileDoesNotExist(string $filename) {
-	$closure = function() use($filename) {
+	$closure = function() use ($filename) {
 		$source = SchemaSource::create(Type::JSON);
 		$source->parseFile($filename);
 	};

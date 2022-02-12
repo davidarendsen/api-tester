@@ -6,14 +6,13 @@ use Arendsen\ApiTester\SchemaSource\Type;
 use Arendsen\ApiTester\Schema\TestCase;
 use Arendsen\ApiTester\Matcher;
 use Arendsen\ApiTester\Matcher\Builder;
-use Arendsen\ApiTester\Matcher\ExpectedValue;
 
 describe('Matcher', function() {
 
 	$source = SchemaSource::create(Type::YAML);
 	$source->parseFile(__DIR__ . '/tests.yaml');
 
-	context('match()', function() use($source) {
+	context('match()', function() use ($source) {
 		$testCase = new TestCase($source->toArray()[0]);
 
 		$httpClient = new HttpClient('https://reqres.in/api/');
@@ -25,7 +24,7 @@ describe('Matcher', function() {
 
 		$matcher = new Matcher($testCase, $httpResponse);
 
-		it('is an instanceof Kahlan\Expectation', function() use($matcher) {
+		it('is an instanceof Kahlan\Expectation', function() use ($matcher) {
 			expect($matcher->match())->toBeAnInstanceOf('Kahlan\Expectation');
 		});
 	});
@@ -33,11 +32,9 @@ describe('Matcher', function() {
 	context('Matcher/Builder', function() use ($source) {
 		$testCase = new TestCase($source->toArray()[0]);
 
-		it('is an instanceof Kahlan\Expectation', function() use($testCase) {
-			$expectedValue = new ExpectedValue($testCase);
-
+		it('is an instanceof Kahlan\Expectation', function() use ($testCase) {
 			$matcherBuilder = new Builder();
-			$matcherBuilder->setExpectedValue($expectedValue->getValue());
+			$matcherBuilder->setActualValue(200);
 
 			foreach($testCase->getMatchers() as $matcher => $matcherData) {
 				$matcherBuilder->addMatcher($matcher, $matcherData);
@@ -46,5 +43,4 @@ describe('Matcher', function() {
 			expect($matcherBuilder->match())->toBeAnInstanceOf('Kahlan\Expectation');
 		});
 	});
-
 });

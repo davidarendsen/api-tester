@@ -13,8 +13,8 @@ class Builder {
 	 */
 	protected Expectation $expectation;
 
-	public function setExpectedValue(mixed $expectedValue) {
-		$this->expectation = expect($expectedValue);
+	public function setActualValue(mixed $actualValue) {
+		$this->expectation = expect($actualValue);
 	}
 
 	/**
@@ -24,10 +24,10 @@ class Builder {
 		switch($matcher) {
 			case Matcher::TO_BE:
 				$this->expectation->toBe($data['value'] ?? '');
-				break;
+			break;
 			case Matcher::TO_BE_A:
 				$this->expectation->toBeA($data);
-				break;
+			break;
 			default:
 				throw new Exception('Could not find matcher ' . $matcher);
 		}
