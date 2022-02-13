@@ -114,6 +114,8 @@ paths:
             toBeA: integer
 ````
 
+* Run this command ````vendor/bin/kahlan --reporter=verbose````
+
 ### TODO
 * Generate a YAML test schema from an OpenAPI schema.
 * Add more Matchers and Selectors
