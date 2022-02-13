@@ -21,24 +21,24 @@ paths:
             toBe:
               type: integer
               value: 200
-          - description: contains a firstName with value 'David'
+          - description: contains a name with value 'David'
             expect:
               selector: json
               selection:
-                - users
+                - data
                 - 0
-                - firstName
+                - name
             toBe:
-              type: integer
-              value: 200
-          - description: contains a firstName with type integer
+              type: string
+              value: cerulean
+          - description: contains a name with type string
             expect:
               selector: json
               selection:
-                - users
+                - data
                 - 0
-                - firstName
-            toBeA: integer
+                - name
+            toBeA: string
       - description: Unauthorized response (401)
         status: 200
         parameters:
@@ -48,17 +48,17 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: contains a firstName with value 'David'
+          - description: contains a nName with value 'cerulean'
             expect:
               selector: json
               selection:
-                - users
+                - data
                 - 0
-                - firstName
+                - name
             toBe:
-              type: integer
-              value: 200
-            toBeA: integer
+              type: string
+              value: cerulean
+            toBeA: string
 
   users:
     get:
@@ -71,14 +71,14 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: contains a firstName with value 'David'
+          - description: contains an id with value of 1
             expect:
               selector: json
               selection:
-                - users
+                - data
                 - 0
-                - firstName
+                - id
             toBe:
               type: integer
-              value: 200
+              value: 1
             toBeA: integer

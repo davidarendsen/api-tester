@@ -7,23 +7,26 @@
     type: integer
     value: 200
 
-- description: contains a firstName with value 'David'
+- description: contains a id with value 1
   expect:
     selector: json
     selection:
-      - users
+      - data
       - 0
-      - firstName
+      - id
   toBe:
     type: integer
-    value: 200
+    value: 1
   toBeA: integer
 
-- description: contains a firstName with type 'string'
+- description: contains a email with value george.bluth@reqres.in
   expect:
     selector: json
     selection:
-      - users
+      - data
       - 0
-      - firstName
+      - email
+  toBe:
+    type: string
+    value: george.bluth@reqres.in
   toBeA: string
