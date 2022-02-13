@@ -6,6 +6,11 @@ use Exception;
 
 class Json extends AbstractSource {
 
+	/**
+	 * @var string $extension
+	 */
+	protected string $extension = 'json';
+
 	public function parse(string $content): void {
 		$this->sourceArray = json_decode($content, true);
 	}

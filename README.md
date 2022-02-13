@@ -7,7 +7,7 @@ It's using the Kahlan Unit & BDD test framework.
 * ````composer require arendsen/api-tester````
 * Create a spec/ApiTest.spec.php file with this content:
 
-````
+````php
 <?php
 
 use Arendsen\ApiTester\ApiTester;
@@ -27,7 +27,7 @@ catch(Exception $e) {
 ````
 
 * Create a spec/yaml_test.yaml file with this content:
-````
+````yaml
 base_uri: https://reqres.in/api/
 environment_variables:
   apiKey: dErPcAsEaPiKeY
@@ -115,6 +115,13 @@ paths:
 ````
 
 * Run this command ````vendor/bin/kahlan --reporter=verbose````
+
+It's also possible to use multiple schema files like below.
+Just make sure that the paths are unique.
+````php
+$source = SchemaSource::create(Type::YAML);
+$source->parseDirectory(__DIR__ . '/tests');
+````
 
 ### TODO
 * Generate a YAML test schema from an OpenAPI schema.

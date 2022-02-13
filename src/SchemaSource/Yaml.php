@@ -7,6 +7,11 @@ use Symfony\Component\Yaml\Yaml as YamlComponent;
 
 class Yaml extends AbstractSource {
 
+	/**
+	 * @var string $extension
+	 */
+	protected string $extension = 'yaml';
+
 	public function parse(string $content): void {
 		$this->sourceArray = YamlComponent::parse($content);
 	}
