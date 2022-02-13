@@ -19,6 +19,7 @@
         }
     },
     "require": {
+		"php": ">=8.0",
         "allansun/openapi-parser": "^2.1",
         "guzzlehttp/guzzle": "^7.0",
         "kahlan/kahlan": "^5.2",
