@@ -21,7 +21,7 @@ paths:
             toBe:
               type: integer
               value: 200
-          - description: contains a name with value 'David'
+          - description: contains a name with value 'cerulean'
             expect:
               selector: json
               selection:
