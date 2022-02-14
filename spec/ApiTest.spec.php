@@ -6,7 +6,7 @@ use Arendsen\ApiTester\SchemaSource\Type;
 
 try {
 	$source = SchemaSource::create(Type::YAML);
-	$source->parseFile(__DIR__ . '/yaml_test.yaml');
+	$source->parseDirectory(__DIR__ . '/schema/');
 
 	$apiTester = new ApiTester($source, [
 //		'allowedRequestsToRun' => [

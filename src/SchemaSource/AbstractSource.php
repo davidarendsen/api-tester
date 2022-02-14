@@ -22,10 +22,14 @@ abstract class AbstractSource implements SourceInterface {
 
 	public function parseDirectory(string $directory): void {
 		$sourceArray = [];
+
 		foreach(glob($directory . '*.' . $this->extension) as $filename) {
 			$this->parseFile($filename);
 			$sourceArray = array_merge_recursive($sourceArray, $this->toArray());
 		}
+
+		$this->parseFile($directory . '.env.' . $this->extension);
+		$sourceArray = array_merge_recursive($sourceArray, $this->toArray());
 
 		$this->sourceArray = $sourceArray;
 	}
