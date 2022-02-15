@@ -7,6 +7,7 @@ paths:
           json:
             username: david
             password: test1234
+            apiKey: "{{apiKey}}"
           headers:
             Api-Key: "{{apiKey}}"
         tests:
@@ -28,13 +29,6 @@ paths:
             toBe:
               type: string
               value: cerulean
-          - description: contains a name with type string
-            expect:
-              selector: json
-              selection:
-                - data
-                - 0
-                - name
             toBeA: string
       - description: Unauthorized response (401)
         status: 200
@@ -56,3 +50,30 @@ paths:
               type: string
               value: cerulean
             toBeA: string
+    post:
+      - description: Successful operation (201)
+        status: 201
+        parameters:
+          json:
+            username: david
+            password: test1234
+            apiKey: "{{apiKey}}"
+          headers:
+            Api-Key: "{{apiKey}}"
+        tests:
+          - description: contains a status code of 200
+            expect:
+              selector: statusCode
+              selection:
+                - 201
+            toBe:
+              type: integer
+              value: 201
+          - description: contains a apiKey with value of {{apiKey}}
+            expect:
+              selector: json
+              selection:
+                - apiKey
+            toBe:
+              type: string
+              value: "{{apiKey}}"

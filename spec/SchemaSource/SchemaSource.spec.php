@@ -48,7 +48,8 @@ function itParsesTheCorrectResponse($source) {
 		'base_uri' => 'https://reqres.in/api/',
 		'environment_variables' => [
 			'apiKey' => 'dErPcAsEaPiKeY',
-		]
+		],
+		'paths' => [],
 	]);
 }
 

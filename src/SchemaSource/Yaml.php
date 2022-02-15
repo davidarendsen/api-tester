@@ -12,16 +12,9 @@ class Yaml extends AbstractSource {
 	 */
 	protected string $extension = 'yaml';
 
-	public function parse(string $content): void {
-		$this->sourceArray = YamlComponent::parse($content);
-	}
-
-	public function parseFile(string $filename): void {
-		if(!file_exists($filename)) {
-			throw new Exception('Source file ' . $filename . ' does not exist!');
-		}
-
-		$this->sourceArray = YamlComponent::parseFile($filename);
+	protected function parse(string $content): void {
+		$sourceArray = YamlComponent::parse($content);
+		$this->addToSourceArray($sourceArray);
 	}
 
 }
