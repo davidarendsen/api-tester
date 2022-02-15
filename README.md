@@ -3,9 +3,10 @@
 With this package you can test API's based on a YAML or JSON file.
 It's using the Kahlan Unit & BDD test framework.
 
-## How to use
-* ````composer require arendsen/api-tester````
-* Create a spec/ApiTest.spec.php file with this content:
+## Example usage
+* First install the package with ````composer require arendsen/api-tester````
+
+* Create a ````spec/ApiTest.spec.php```` file with this content:
 
 ````php
 <?php
@@ -16,7 +17,8 @@ use Arendsen\ApiTester\SchemaSource\Type;
 
 try {
     $source = SchemaSource::create(Type::YAML);
-    $source->parseFile(__DIR__ . '/yaml_test.yaml');
+    $source->parseEnvironmentVariablesFile(__DIR__ . '/tests/.env.yaml');
+    $source->parseDirectory(__DIR__ . '/tests');
 
     $apiTester = new ApiTester($source);
     $apiTester->run();
@@ -26,11 +28,16 @@ catch(Exception $e) {
 }
 ````
 
-* Create a spec/yaml_test.yaml file with this content:
+* Create a ````spec/tests/.env.yaml```` file with this content:
 ````yaml
 base_uri: https://reqres.in/api/
 environment_variables:
   apiKey: dErPcAsEaPiKeY
+````
+
+* Separate all your endpoints in different files. Just make sure the paths are unique.
+Create a ````spec/tests/posts.yaml```` file with this content:
+````yaml
 paths:
   posts:
     get:
@@ -46,8 +53,6 @@ paths:
           - description: contains a status code of 200
             expect:
               selector: statusCode
-              selection:
-                - 200
             toBe:
               type: integer
               value: 200
@@ -70,7 +75,7 @@ paths:
                 - name
             toBeA: string
       - description: Unauthorized response (401)
-        status: 200
+        status: 401
         parameters:
           json:
             username: david
@@ -78,7 +83,7 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: contains a nName with value 'cerulean'
+          - description: contains a name with value 'cerulean'
             expect:
               selector: json
               selection:
@@ -90,38 +95,29 @@ paths:
               value: cerulean
             toBeA: string
 
-  users:
-    get:
+    post:
       - description: Successful operation (200)
         status: 200
         parameters:
           json:
             username: david
             password: test1234
+            apiKey: "{{apiKey}}"
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: contains an id with value of 1
+          - description: contains an apiKey with value of {{apiKey}}
             expect:
               selector: json
               selection:
-                - data
-                - 0
-                - id
+                - apiKey
             toBe:
-              type: integer
-              value: 1
-            toBeA: integer
+              type: string
+              value: "{{apiKey}}"
 ````
 
 * Run this command ````vendor/bin/kahlan --reporter=verbose````
 
-It's also possible to use multiple schema files like below.
-Just make sure that the paths are unique.
-````php
-$source = SchemaSource::create(Type::YAML);
-$source->parseDirectory(__DIR__ . '/tests');
-````
 
 ### TODO
 * Generate a YAML test schema from an OpenAPI schema.

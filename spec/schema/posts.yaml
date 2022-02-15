@@ -61,11 +61,9 @@ paths:
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: contains a status code of 200
+          - description: contains a status code of 201
             expect:
               selector: statusCode
-              selection:
-                - 201
             toBe:
               type: integer
               value: 201

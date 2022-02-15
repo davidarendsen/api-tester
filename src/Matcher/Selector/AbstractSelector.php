@@ -6,15 +6,15 @@ use Arendsen\ApiTester\HttpResponse;
 
 abstract class AbstractSelector implements SelectorInterface {
 
-	/**
-	 * @var array $selection
-	 */
-	protected $selection;
+    /**
+     * @var array $selection
+     */
+    protected $selection;
 
-	public function __construct(array $selection) {
-		$this->selection = $selection;
-	}
+    public function __construct(array $selection) {
+        $this->selection = $selection;
+    }
 
-	abstract public function getSelection(HttpResponse $httpResponse): mixed;
+    abstract public function getSelection(HttpResponse $httpResponse): mixed;
 
 }
