@@ -4,6 +4,7 @@ namespace Arendsen\ApiTester;
 
 use Arendsen\ApiTester\SchemaSource\SourceInterface;
 use Arendsen\ApiTester\HttpClient;
+use Arendsen\ApiTester\Schema\Request;
 
 class ApiTester {
 
@@ -25,58 +26,57 @@ class ApiTester {
     public function __construct(SourceInterface $schemaSource, array $options = []) {
         $this->schema = new Schema($schemaSource);
         $this->options = $options;
+        $this->httpClient = new HttpClient($this->schema->getBaseUri());
     }
 
     public function run() {
-        $allowedRequestsToRun = $this->getConfig('allowedRequestsToRun');
-        $disallowedRequestsToRun = $this->getConfig('disallowedRequestsToRun');
-        $httpClient = new HttpClient($this->schema->getBaseUri());
-        $schema = $this->schema;
+        $apiTester = $this;
 
-        describe('ApiTester', function() use($allowedRequestsToRun, $disallowedRequestsToRun, $httpClient, $schema) {
+        describe('ApiTester', function() use($apiTester) {
+            foreach($apiTester->schema->getRequests() as $request) {
+                $apiTester->runRequest($request);
+            }
+        });
 
-            foreach($schema->getRequests() as $request) {
-                if(!empty($allowedRequestsToRun) && !in_array($request->getMethodAndPath(), $allowedRequestsToRun)) {
-                    continue;
-                }
-                if(!empty($disallowedRequestsToRun) && in_array($request->getMethodAndPath(), $disallowedRequestsToRun)) {
-                    continue;
-                }
+    }
 
-                describe($request->getMethodAndPath(), function() use($request, $httpClient) {
-                    foreach($request->getExpectedResponses() as $expectedResponse) {
+    private function runRequest(Request $request) {
+        $apiTester = $this;
 
-                        /**
-                         * TODO: We need to run the PreRequests first.
-                         * So that means we need to do this logic before $schema->getRequests().
-                         * We could make the request_id a key of $request.
-                         * That way we could determine the order of requests to run.
-                         * 
-                         * $requestId = $expectedResponse->getRequestId();
-                         * $schema->getPreRequests()[$requestId];
-                         */
+        if($this->isDisallowed($request)) {
+            return;
+        }
 
-                        $httpResponse = $httpClient->request(
-                            $request->getMethod(),
-                            $request->getPath(),
-                            $expectedResponse->getParameters()
-                        );
+        describe($request->getMethodAndPath(), function() use($request, $apiTester) {
+            foreach($request->getExpectedResponses() as $expectedResponse) {
 
-                        context($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
-                            foreach($expectedResponse->getTestCases() as $testCase) {
-                                $matcher = new Matcher($testCase, $httpResponse);
+                /**
+                 * TODO: We need to run the PreRequests first.
+                 * So that means we need to do this logic before $schema->getRequests().
+                 * We could make the request_id a key of $request.
+                 * That way we could determine the order of requests to run.
+                 * 
+                 * $requestId = $expectedResponse->getRequestId();
+                 * $schema->getPreRequests()[$requestId];
+                 */
 
-                                it($testCase->getDescription(), function() use($matcher) {
-                                    $matcher->match();
-                                });
-                            }
+                $httpResponse = $apiTester->httpClient->request(
+                    $request->getMethod(),
+                    $request->getPath(),
+                    $expectedResponse->getParameters()
+                );
+
+                context($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
+                    foreach($expectedResponse->getTestCases() as $testCase) {
+                        $matcher = new Matcher($testCase, $httpResponse);
+
+                        it($testCase->getDescription(), function() use($matcher) {
+                            $matcher->match();
                         });
                     }
                 });
             }
-
         });
-
     }
 
     /**
@@ -90,5 +90,19 @@ class ApiTester {
         }
 
         return null;
+    }
+
+    protected function isDisallowed(Request $request): bool {
+        $allowedRequestsToRun = $this->getConfig('allowedRequestsToRun');
+        $disallowedRequestsToRun = $this->getConfig('disallowedRequestsToRun');
+
+        if(!empty($allowedRequestsToRun) && !in_array($request->getMethodAndPath(), $allowedRequestsToRun)) {
+            return true;
+        }
+        if(!empty($disallowedRequestsToRun) && in_array($request->getMethodAndPath(), $disallowedRequestsToRun)) {
+            return true;
+        }
+
+        return false;
     }
 }
