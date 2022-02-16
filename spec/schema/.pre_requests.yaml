@@ -1,0 +1,12 @@
+preRequests:
+  - description: Get userID
+    requestSelector:
+      - users
+      - get
+      - getUsersSuccessful
+    responseSelector: json
+    selection:
+      - data
+      - 0
+      - id
+    toEnv: userID

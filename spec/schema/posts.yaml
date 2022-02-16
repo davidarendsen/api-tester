@@ -2,6 +2,7 @@ paths:
   posts:
     get:
       - description: Successful operation (200)
+        requestId: getPostsSuccess
         status: 200
         parameters:
           json:
@@ -31,6 +32,7 @@ paths:
               value: cerulean
             toBeA: string
       - description: Unauthorized response (401)
+        requestId: getPostsUnauthorized
         status: 200
         parameters:
           json:
@@ -52,6 +54,7 @@ paths:
             toBeA: string
     post:
       - description: Successful operation (201)
+        requestId: postPostsSuccess
         status: 201
         parameters:
           json:

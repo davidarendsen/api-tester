@@ -2,6 +2,7 @@ paths:
   users:
     get:
       - description: Successful operation (200)
+        requestId: getUsersSuccessful
         status: 200
         parameters:
           json:
