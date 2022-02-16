@@ -53,7 +53,7 @@ paths:
           - description: contains a status code of 200
             expect:
               selector: statusCode
-            toBe:
+            to_be:
               type: integer
               value: 200
           - description: contains a name with value 'cerulean'
@@ -63,7 +63,7 @@ paths:
                 - data
                 - 0
                 - name
-            toBe:
+            to_be:
               type: string
               value: cerulean
           - description: contains a name with type string
@@ -73,7 +73,7 @@ paths:
                 - data
                 - 0
                 - name
-            toBeA: string
+            to_be_a: string
       - description: Unauthorized response (401)
         status: 401
         parameters:
@@ -90,10 +90,10 @@ paths:
                 - data
                 - 0
                 - name
-            toBe:
+            to_be:
               type: string
               value: cerulean
-            toBeA: string
+            to_be_a: string
 
     post:
       - description: Successful operation (200)
@@ -111,7 +111,7 @@ paths:
               selector: json
               selection:
                 - apiKey
-            toBe:
+            to_be:
               type: string
               value: "{{apiKey}}"
 ````
