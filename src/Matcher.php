@@ -10,8 +10,8 @@ use Arendsen\ApiTester\Matcher\Builder;
 
 class Matcher {
 
-    const TO_BE = 'toBe';
-    const TO_BE_A = 'toBeA';
+    const TO_BE = 'to_be';
+    const TO_BE_A = 'to_be_a';
 
     const MATCHERS = [
         self::TO_BE,

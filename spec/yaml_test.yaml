@@ -5,6 +5,7 @@ paths:
   posts:
     get:
       - description: Successful operation (200)
+        request_id: getPostsSuccess
         status: 200
         parameters:
           json:
@@ -18,7 +19,7 @@ paths:
               selector: statusCode
               selection:
                 - 200
-            toBe:
+            to_be:
               type: integer
               value: 200
           - description: contains a name with value 'cerulean'
@@ -28,7 +29,7 @@ paths:
                 - data
                 - 0
                 - name
-            toBe:
+            to_be:
               type: string
               value: cerulean
           - description: contains a name with type string
@@ -38,8 +39,9 @@ paths:
                 - data
                 - 0
                 - name
-            toBeA: string
+            to_be_a: string
       - description: Unauthorized response (401)
+        request_id: getPostsUnauthorized
         status: 200
         parameters:
           json:
@@ -55,14 +57,15 @@ paths:
                 - data
                 - 0
                 - name
-            toBe:
+            to_be:
               type: string
               value: cerulean
-            toBeA: string
+            to_be_a: string
 
   users:
     get:
       - description: Successful operation (200)
+        request_id: getUsersSuccess
         status: 200
         parameters:
           json:
@@ -78,7 +81,7 @@ paths:
                 - data
                 - 0
                 - id
-            toBe:
+            to_be:
               type: integer
               value: 1
-            toBeA: integer
+            to_be_a: integer

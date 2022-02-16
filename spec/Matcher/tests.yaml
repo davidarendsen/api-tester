@@ -3,7 +3,7 @@
     selector: statusCode
     selection:
       - 200
-  toBe:
+  to_be:
     type: integer
     value: 200
 
@@ -14,10 +14,10 @@
       - data
       - 0
       - id
-  toBe:
+  to_be:
     type: integer
     value: 1
-  toBeA: integer
+  to_be_a: integer
 
 - description: contains a email with value george.bluth@reqres.in
   expect:
@@ -26,7 +26,7 @@
       - data
       - 0
       - email
-  toBe:
+  to_be:
     type: string
     value: george.bluth@reqres.in
-  toBeA: string
+  to_be_a: string

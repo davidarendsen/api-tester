@@ -2,7 +2,7 @@ paths:
   users:
     get:
       - description: Successful operation (200)
-        requestId: getUsersSuccessful
+        request_id: getUsersSuccessful
         status: 200
         parameters:
           json:
@@ -18,7 +18,7 @@ paths:
                 - data
                 - 0
                 - id
-            toBe:
+            to_be:
               type: integer
               value: 1
-            toBeA: integer
+            to_be_a: integer

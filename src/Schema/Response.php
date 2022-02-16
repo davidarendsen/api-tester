@@ -17,6 +17,10 @@ class Response {
         return $this->response['description'] ?? '';
     }
 
+    public function getRequestId(): string {
+        return $this->response['request_id'] ?? '';
+    }
+
     public function getStatusCode(): int {
         return $this->response['status'] ?? 0;
     }
