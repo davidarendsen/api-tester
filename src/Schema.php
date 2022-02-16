@@ -45,4 +45,16 @@ class Schema {
         return $this->schema['environment_variables'] ?? [];
     }
 
+    public function getPreRequests(): array {
+        $preRequests = [];
+
+        if(isset($this->schema['pre_requests'])) {
+            foreach($this->schema['pre_requests'] as $preRequest) {
+                $preRequests[] = new PreRequest($preRequest);
+            }
+        }
+
+        return $preRequests;
+    }
+
 }

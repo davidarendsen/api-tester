@@ -21,6 +21,11 @@ abstract class AbstractSource implements SourceInterface {
      */
     protected array $environmentVariables = [];
 
+    /**
+     * @var array $preRequests
+     */
+    protected array $preRequests = [];
+
     abstract protected function parse(string $content): void;
 
     public function parseFile(string $filename): void {
@@ -45,6 +50,12 @@ abstract class AbstractSource implements SourceInterface {
         $this->parse($this->getFileContents($filename));
         $this->addToSourceArray($this->toArray());
         $this->environmentVariables = $this->toArray()['environment_variables'] ?? [];
+    }
+
+    public function parsePreRequestsFile(string $filename): void {
+        $this->parse($this->getFileContents($filename));
+        $this->addToSourceArray($this->toArray());
+        $this->preRequests = $this->toArray()['pre_requests'] ?? [];
     }
 
     public function toArray(): array {
