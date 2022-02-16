@@ -1,9 +1,6 @@
 pre_requests:
   - description: Get userID
-    request_selector:
-      - users
-      - get
-      - getUsersSuccessful
+    request_id: getUsersSuccessful
     response_selector: json
     selection:
       - data

@@ -5,6 +5,7 @@ namespace Arendsen\ApiTester;
 use Exception;
 use Arendsen\ApiTester\SchemaSource\SourceInterface;
 use Arendsen\ApiTester\Schema\Request;
+use Arendsen\ApiTester\Schema\PreRequest;
 
 class Schema {
 
@@ -50,7 +51,10 @@ class Schema {
 
         if(isset($this->schema['pre_requests'])) {
             foreach($this->schema['pre_requests'] as $preRequest) {
-                $preRequests[] = new PreRequest($preRequest);
+                $requestId = $preRequest['request_id'] ?? null;
+                if($requestId) {
+                    $preRequests[$requestId] = new PreRequest($preRequest);
+                }
             }
         }
 

@@ -45,6 +45,17 @@ class ApiTester {
 
                 describe($request->getMethodAndPath(), function() use($request, $httpClient) {
                     foreach($request->getExpectedResponses() as $expectedResponse) {
+
+                        /**
+                         * TODO: We need to run the PreRequests first.
+                         * So that means we need to do this logic before $schema->getRequests().
+                         * We could make the request_id a key of $request.
+                         * That way we could determine the order of requests to run.
+                         * 
+                         * $requestId = $expectedResponse->getRequestId();
+                         * $schema->getPreRequests()[$requestId];
+                         */
+
                         $httpResponse = $httpClient->request(
                             $request->getMethod(),
                             $request->getPath(),

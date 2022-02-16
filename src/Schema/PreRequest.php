@@ -17,8 +17,8 @@ class PreRequest {
         return $this->preRequestData['description'] ?? '';
     }
 
-    public function getRequestSelector(): array {
-        return $this->preRequestData['request_selector'] ?? [];
+    public function getRequestId(): string {
+        return $this->preRequestData['request_id'] ?? '';
     }
 
     public function getResponseSelector(): string {
