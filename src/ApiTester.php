@@ -33,6 +33,10 @@ class ApiTester {
         $apiTester = $this;
 
         describe('ApiTester', function() use($apiTester) {
+            foreach($apiTester->schema->getPreRequests() as $request) {
+                $apiTester->runRequest($request);
+            }
+
             foreach($apiTester->schema->getRequests() as $request) {
                 $apiTester->runRequest($request);
             }
@@ -49,22 +53,13 @@ class ApiTester {
 
         describe($request->getMethodAndPath(), function() use($request, $apiTester) {
             foreach($request->getExpectedResponses() as $expectedResponse) {
-
-                /**
-                 * TODO: We need to run the PreRequests first.
-                 * So that means we need to do this logic before $schema->getRequests().
-                 * We could make the request_id a key of $request.
-                 * That way we could determine the order of requests to run.
-                 * 
-                 * $requestId = $expectedResponse->getRequestId();
-                 * $schema->getPreRequests()[$requestId];
-                 */
-
                 $httpResponse = $apiTester->httpClient->request(
                     $request->getMethod(),
                     $request->getPath(),
                     $expectedResponse->getParameters()
                 );
+
+                //TODO: Execute tasks $expectedResponse->getTasks();
 
                 context($expectedResponse->getDescription(), function() use ($expectedResponse, $httpResponse) {
                     foreach($expectedResponse->getTestCases() as $testCase) {

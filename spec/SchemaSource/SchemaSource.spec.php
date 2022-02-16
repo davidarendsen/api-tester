@@ -50,6 +50,7 @@ function itParsesTheCorrectResponse($source) {
             'apiKey' => 'dErPcAsEaPiKeY',
         ],
         'paths' => [],
+        'pre_request_paths' => [],
     ]);
 }
 

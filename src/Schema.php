@@ -23,42 +23,35 @@ class Schema {
     }
 
     public function getRequests(): array {
-        if(!isset($this->schema['paths'])) {
-            throw new Exception('You forgot to add the paths in your schema!');
-        }
+        return $this->setupRequests('paths');
+    }
 
-        if(!is_array($this->schema['paths'])) {
-            throw new Exception('Paths needs to be an array!');
-        }
-
-        $requests = [];
-
-        foreach($this->schema['paths'] as $path => $requestsArray) {
-            foreach($requestsArray as $method => $responses) {
-                $requests[] = new Request($method, $path, $responses);
-            }
-        }
-
-        return $requests;
+    public function getPreRequests(): array {
+        return $this->setupRequests('pre_request_paths');
     }
 
     public function getEnvironmentVariables(): array {
         return $this->schema['environment_variables'] ?? [];
     }
 
-    public function getPreRequests(): array {
-        $preRequests = [];
+    private function setupRequests(string $key): array {
+        if(!isset($this->schema[$key])) {
+            throw new Exception('You forgot to add ' . $key . ' in your schema!');
+        }
 
-        if(isset($this->schema['pre_requests'])) {
-            foreach($this->schema['pre_requests'] as $preRequest) {
-                $requestId = $preRequest['request_id'] ?? null;
-                if($requestId) {
-                    $preRequests[$requestId] = new PreRequest($preRequest);
-                }
+        if(!is_array($this->schema[$key])) {
+            throw new Exception($key . ' needs to be an array!');
+        }
+
+        $requests = [];
+
+        foreach($this->schema[$key] as $path => $requestsArray) {
+            foreach($requestsArray as $method => $responses) {
+                $requests[] = new Request($method, $path, $responses);
             }
         }
 
-        return $preRequests;
+        return $requests;
     }
 
 }

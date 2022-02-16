@@ -55,7 +55,6 @@ abstract class AbstractSource implements SourceInterface {
     public function parsePreRequestsFile(string $filename): void {
         $this->parse($this->getFileContents($filename));
         $this->addToSourceArray($this->toArray());
-        $this->preRequests = $this->toArray()['pre_requests'] ?? [];
     }
 
     public function toArray(): array {
@@ -74,6 +73,11 @@ abstract class AbstractSource implements SourceInterface {
         $sourceArray['paths'] = array_merge(
             $sourceArray['paths'] ?? [],
             $this->sourceArray['paths'] ?? []
+        );
+
+        $sourceArray['pre_request_paths'] = array_merge(
+            $sourceArray['pre_request_paths'] ?? [],
+            $this->sourceArray['pre_request_paths'] ?? []
         );
 
         $this->sourceArray = array_merge($this->sourceArray, $sourceArray);

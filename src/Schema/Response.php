@@ -39,4 +39,14 @@ class Response {
         return $testCases;
     }
 
+    public function getTasks(): array {
+        $tasks = [];
+
+        foreach($this->response['tasks'] as $task) {
+            $tasks[] = new Task($task);
+        }
+
+        return $tasks;
+    }
+
 }

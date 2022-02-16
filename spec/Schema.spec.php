@@ -5,7 +5,7 @@ use Arendsen\ApiTester\SchemaSource;
 use Arendsen\ApiTester\SchemaSource\Type;
 use Arendsen\ApiTester\Schema;
 
-describe('Schema', function() {
+fdescribe('Schema', function() {
     $source = SchemaSource::create(Type::YAML);
     $source->parseEnvironmentVariablesFile(__DIR__ . '/schema/.env.yaml');
     $source->parsePreRequestsFile(__DIR__ . '/schema/.pre_requests.yaml');
@@ -16,18 +16,23 @@ describe('Schema', function() {
     context('PreRequests', function() use($schema) {
         $preRequests = $schema->getPreRequests();
 
-        it('contains key getUsersSuccessful', function() use($preRequests) {
-            expect($preRequests)->toContainKey('getUsersSuccessful');
+        it('is an instance of Arendsen\ApiTester\Schema\Request', function() use($preRequests) {
+            expect($preRequests[0])->toBeAnInstanceOf('Arendsen\ApiTester\Schema\Request');
         });
 
-        $preRequest = $preRequests['getUsersSuccessful'];
+        context('Response', function() use($preRequests) {
+            $expectedResponses = $preRequests[0]->getExpectedResponses();
 
-        it('is an instance of Arendsen\ApiTester\Schema\PreRequest', function() use($preRequest) {
-            expect($preRequest)->toBeAnInstanceOf('Arendsen\ApiTester\Schema\PreRequest');
+            it('is an instance of Arendsen\ApiTester\Schema\Response', function() use($expectedResponses) {
+                expect($expectedResponses[0])->toBeAnInstanceOf('Arendsen\ApiTester\Schema\Response');
+            });
+
+            $tasks = $expectedResponses[0]->getTasks();
+
+            it('has tasks and those are an instance of Arendsen\ApiTester\Schema\Task', function() use($tasks) {
+                expect($tasks[0])->toBeAnInstanceOf('Arendsen\ApiTester\Schema\Task');
+            });
         });
 
-        it('has a request_id of getUsersSuccessful', function() use($preRequest) {
-            expect($preRequest->getRequestId())->toBe('getUsersSuccessful');
-        });
     });
 });
