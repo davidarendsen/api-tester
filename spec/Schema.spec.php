@@ -5,7 +5,7 @@ use Arendsen\ApiTester\SchemaSource;
 use Arendsen\ApiTester\SchemaSource\Type;
 use Arendsen\ApiTester\Schema;
 
-fdescribe('Schema', function() {
+describe('Schema', function() {
     $source = SchemaSource::create(Type::YAML);
     $source->parseEnvironmentVariablesFile(__DIR__ . '/schema/.env.yaml');
     $source->parsePreRequestsFile(__DIR__ . '/schema/.pre_requests.yaml');
@@ -31,6 +31,10 @@ fdescribe('Schema', function() {
 
             it('has tasks and those are an instance of Arendsen\ApiTester\Schema\Task', function() use($tasks) {
                 expect($tasks[0])->toBeAnInstanceOf('Arendsen\ApiTester\Schema\Task');
+            });
+
+            it('has a task with a description', function() use($tasks) {
+                expect($tasks[0]->getDescription())->toBe('Get userID');
             });
         });
 
