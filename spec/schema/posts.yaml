@@ -1,6 +1,3 @@
-base_uri: https://reqres.in/api/
-environment_variables:
-  apiKey: dErPcAsEaPiKeY
 paths:
   posts:
     get:
@@ -11,6 +8,7 @@ paths:
           json:
             username: david
             password: test1234
+            apiKey: "{{apiKey}}"
           headers:
             Api-Key: "{{apiKey}}"
         tests:
@@ -32,13 +30,6 @@ paths:
             to_be:
               type: string
               value: cerulean
-          - description: contains a name with type string
-            expect:
-              selector: json
-              selection:
-                - data
-                - 0
-                - name
             to_be_a: string
       - description: Unauthorized response (401)
         request_id: getPostsUnauthorized
@@ -61,27 +52,29 @@ paths:
               type: string
               value: cerulean
             to_be_a: string
-
-  users:
-    get:
-      - description: Successful operation (200)
-        request_id: getUsersSuccess
-        status: 200
+    post:
+      - description: Successful operation (201)
+        requestId: postPostsSuccess
+        status: 201
         parameters:
           json:
             username: david
             password: test1234
+            apiKey: "{{apiKey}}"
           headers:
             Api-Key: "{{apiKey}}"
         tests:
-          - description: contains an id with value of 1
+          - description: contains a status code of 201
+            expect:
+              selector: statusCode
+            to_be:
+              type: integer
+              value: 201
+          - description: contains a apiKey with value of {{apiKey}}
             expect:
               selector: json
               selection:
-                - data
-                - 0
-                - id
+                - apiKey
             to_be:
-              type: integer
-              value: 1
-            to_be_a: integer
+              type: string
+              value: "{{apiKey}}"

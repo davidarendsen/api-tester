@@ -6,6 +6,6 @@ use Arendsen\ApiTester\HttpResponse;
 
 interface SelectorInterface {
 
-	public function getSelection(HttpResponse $httpResponse): mixed;
+    public function getSelection(HttpResponse $httpResponse): mixed;
 
 }

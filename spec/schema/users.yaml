@@ -1,0 +1,24 @@
+paths:
+  users:
+    get:
+      - description: Successful operation (200)
+        request_id: getUsersSuccessful
+        status: 200
+        parameters:
+          json:
+            username: david
+            password: test1234
+          headers:
+            Api-Key: "{{apiKey}}"
+        tests:
+          - description: contains an id with value of 1
+            expect:
+              selector: json
+              selection:
+                - data
+                - 0
+                - id
+            to_be:
+              type: integer
+              value: 1
+            to_be_a: integer
