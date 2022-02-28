@@ -19,10 +19,13 @@
         }
     },
     "require": {
-		"php": ">=8.0",
+        "php": ">=8.0",
         "allansun/openapi-parser": "^2.1",
         "guzzlehttp/guzzle": "^7.0",
         "kahlan/kahlan": "^5.2",
         "symfony/yaml": "^6.0"
+    },
+    "scripts": {
+        "test": "kahlan --reporter=verbose"
     }
 }
